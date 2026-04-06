@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="container" id="div">
+    <h2>Student Registration Form</h2>
+
+    <form action="insert.php" method="post">
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Date of Birth</label>
+        <input type="date" name="dob" required>
+
+        <label>Department</label>
+        <select name="department" required>
+            <option value="">Select</option>
+            <option value="CSE">CSE</option>
+			<option value="CSE">IT</option>
+            <option value="ECE">ECE</option>
+            <option value="EEE">EEE</option>
+            <option value="ME">ME</option>
+        </select>
+
+        <label>Phone</label>
+        <input type="number" name="phone" required>
+
+        <button type="submit">Register</button>
+		<button onclick="location.href='display.php'" type="button">
+         View</button>
+	
+    </form>
+	
+	
+	
+</div>
+
+</body>
+</html>
+Insert.php
+<?php
+$conn = new mysqli("localhost", "root", "your_password", "veltech");
+
+if ($conn->connect_error) {
+    die("Connection failed");
+}
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+$dob = $_POST['dob'];
+$department = $_POST['department'];
+$phone = $_POST['phone'];
+
+$sql = "INSERT INTO student 
+        (name, email, dob, department, phone)
+        VALUES ('$name', '$email', '$dob', '$department', '$phone')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Student Registered Successfully";
+} else {
+    echo "Error: " . $conn->error;
+}
+
+$conn->close();
+?>
+SQL Table creation Query: create database veltech;
+use veltech;
+
+CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    dob DATE NOT NULL,
+    department VARCHAR(50),
+    phone VARCHAR(15)
+);
+
+desc student;
+
+select * from student;
+display.php
+<?php
+$conn = new mysqli("localhost", "root", "your_password", "veltech");
+
+if ($conn->connect_error) {
+    die("Connection failed");
+}
+?>
+
+<h3>Registered Students</h3>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>DOB</th>
+            <th>Department</th>
+            <th>Phone</th>
+        </tr>
+
+        <?php
+        $result = mysqli_query($conn, "SELECT * FROM student");
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<tr>
+                    <td>{$row['name']}</td>
+                    <td>{$row['email']}</td>
+                    <td>{$row['dob']}</td>
+                    <td>{$row['department']}</td>
+                    <td>{$row['phone']}</td>
+                  </tr>";
+        }
+        ?>
+    </table>
+test.php
+<?php
+$conn = new mysqli("localhost", "root", "Hafiz_4557", "veltech");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+?>
