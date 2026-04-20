@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/employer/post-job}">Post Job</a>
+        <a th:href="@{/jobs}">Browse Jobs</a>
+        <form th:action="@{/logout}" method="post" style="display:inline;"><button class="primary" type="submit" style="background:#0e2a65;">Logout</button></form>
+    </nav>
+</header>
+<section class="section">
+    <h2>Employer Dashboard</h2>
+    <p class="lead">Welcome, <span th:text="${user.name}"></span>. Manage your job postings and review applicants.</p>
+    <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+        <div class="dashboard-card"><h3>Open Jobs</h3><p th:text="${jobs.size()}"></p></div>
+        <div class="dashboard-card"><h3>Total Applicants</h3><p th:text="${applications.size()}"></p></div>
+        <div class="dashboard-card"><h3>Role</h3><p th:text="${user.role}"></p></div>
+    </div>
+</section>
+<section class="section" style="background:#edf4ff;">
+    <h2>Your Job Postings</h2>
+    <div class="card">
+        <ul class="panel-list">
+            <li th:each="job : ${jobs}">
+                <strong th:text="${job.title}"></strong>
+                <p th:text="${job.location}"></p>
+                <p><small th:text="${job.skills}"></small></p>
+                <a th:href="@{'/employer/job/' + ${job.id} + '/applicants'}">View applicants</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<footer>
+    <p>Post jobs, monitor applicants, and keep hiring moving.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/login}">Login</a>
+    </nav>
+</header>
+<section class="section">
+    <h2>Search Careers</h2>
+    <p class="lead">Find the right opportunity from corporate roles, premium recruiter postings, and student-friendly jobs.</p>
+    <form class="card" th:action="@{/jobs}" method="get">
+        <input type="search" name="q" th:value="${query}" placeholder="Search by title, location or skills">
+        <button class="primary" type="submit">Search jobs</button>
+    </form>
+</section>
+<section class="section">
+    <div class="job-grid">
+        <div class="card" th:each="job : ${jobs}">
+            <div class="badge" th:text="${job.location}">Location</div>
+            <h3 th:text="${job.title}">Job Title</h3>
+            <p th:text="${job.description}">Short summary of the open position.</p>
+            <p><strong>Skills:</strong> <span th:text="${job.skills}">HTML, Java</span></p>
+            <p><strong>Salary:</strong> <span th:text="${job.salary}">$00,000</span></p>
+            <a th:href="@{'/jobs/' + ${job.id}}" class="primary">View role</a>
+        </div>
+    </div>
+</section>
+<footer>
+    <p>Browse all premium and corporate job postings.</p>
+</footer>
+</body>
+</html>

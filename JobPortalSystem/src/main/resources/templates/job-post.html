@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Job</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/jobs}">Browse Jobs</a>
+    </nav>
+</header>
+<section class="section">
+    <div class="card">
+        <h2>Post a new job</h2>
+        <form th:action="@{/employer/post-job}" method="post">
+            <input type="text" name="title" placeholder="Job Title" required>
+            <input type="text" name="location" placeholder="Location" required>
+            <input type="text" name="skills" placeholder="Required skills" required>
+            <input type="text" name="salary" placeholder="Salary range" required>
+            <textarea name="description" rows="6" placeholder="Job description" required></textarea>
+            <button class="primary" type="submit">Post role</button>
+        </form>
+    </div>
+</section>
+<footer>
+    <p>Employers can publish roles and manage applicants from the dashboard.</p>
+</footer>
+</body>
+</html>

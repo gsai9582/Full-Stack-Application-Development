@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Apply - ' + ${job.title}">Apply for Job</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/dashboard}">Dashboard</a>
+    </nav>
+</header>
+<section class="section">
+    <div class="card">
+        <h2 th:text="${job.title}">Job Title</h2>
+        <p th:text="${job.description}">Job details here</p>
+        <form th:action="@{'/jobs/' + ${job.id} + '/apply'}" method="post" enctype="multipart/form-data">
+            <label>Upload your resume</label>
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+            <button class="primary" type="submit">Submit Application</button>
+        </form>
+    </div>
+</section>
+<footer>
+    <p>Upload your resume to complete the application process.</p>
+</footer>
+</body>
+</html>

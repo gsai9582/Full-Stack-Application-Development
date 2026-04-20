@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JobPortal Pro</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/register}">Register</a>
+    </nav>
+</header>
+<section class="section">
+    <div class="card">
+        <h2>Sign in to your account</h2>
+        <p class="lead">Secure access to student, employer, and admin dashboards.</p>
+        <div th:if="${param.error}" class="error">Invalid email or password</div>
+        <div th:if="${param.logout}" class="success">You have been logged out</div>
+        <form th:action="@{/login}" method="post">
+            <input type="email" name="username" placeholder="Email address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button class="primary" type="submit">Sign in</button>
+        </form>
+        <p>New to JobPortal? <a th:href="@{/register}">Create an account</a></p>
+    </div>
+</section>
+<footer>
+    <p>Login securely with Spring Security authentication.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header>
+    <div class="logo">JobPortal Pro</div>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/employer/post-job}">Post Job</a>
+    </nav>
+</header>
+<section class="section">
+    <h2 th:text="'Applicants for ' + ${job.title}">Applicants</h2>
+    <div class="card">
+        <ul class="panel-list">
+            <li th:each="application : ${applications}">
+                <strong th:text="${application.applicant.name}">Candidate Name</strong>
+                <p><span th:text="${application.applicant.email}"></span> • <span th:text="${application.status}"></span></p>
+                <p><a th:href="@{'/uploads/' + ${application.resumeFilename}}">Download resume</a></p>
+            </li>
+        </ul>
+    </div>
+</section>
+<footer>
+    <p>Review applications and manage candidate status from employer dashboard.</p>
+</footer>
+</body>
+</html>
