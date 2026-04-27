@@ -1,0 +1,10 @@
+body{font-family:Arial;background:#eef2f7;margin:0;padding:30px}
+.container{max-width:1000px;margin:auto;background:#fff;padding:25px;border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,.08)}
+h1,h2{text-align:center;color:#1f3c88}
+.filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+select,button{padding:10px;border-radius:8px;border:1px solid #ccc}
+button{background:#1f3c88;color:#fff;border:none;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{padding:10px;border:1px solid #ddd;text-align:center}
+th{background:#1f3c88;color:#fff}
+tr:nth-child(even){background:#f9f9f9}
