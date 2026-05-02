@@ -1,0 +1,10 @@
+body{margin:0;font-family:Arial;background:linear-gradient(135deg,#1f3c88,#5c7cfa);height:100vh;display:flex;justify-content:center;align-items:center}
+.login-box{background:#fff;padding:30px;border-radius:14px;box-shadow:0 15px 30px rgba(0,0,0,.2);width:350px}
+h1{text-align:center;color:#1f3c88}
+input{width:100%;padding:12px;margin-top:10px;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:12px;margin-top:15px;background:#1f3c88;color:#fff;border:none;border-radius:8px;cursor:pointer}
+button:hover{background:#162d67}
+.error{color:#d11a2a;font-size:13px}
+.center{text-align:center}
+.success{color:green;text-align:center}
+a{text-decoration:none}

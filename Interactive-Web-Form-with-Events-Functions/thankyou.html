@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Feedback Submitted</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="glass-card thankyou-card">
+            <div class="thankyou-icon">🎉</div>
+            <h1>Thank You!</h1>
+            <p class="thankyou-message">Your feedback has been successfully submitted.</p>
+            <p class="thankyou-submessage">We appreciate your time and valuable input. It helps us improve our services.</p>
+            
+            <div class="thankyou-details" id="thankyouDetails">
+                <!-- Filled by JavaScript -->
+            </div>
+
+            <div class="thankyou-actions">
+                <a href="index.html" class="btn btn-submit">Submit Another Response</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('feedbackFormTheme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.querySelector('.theme-icon').textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            themeToggle.querySelector('.theme-icon').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('feedbackFormTheme', isDark ? 'dark' : 'light');
+        });
+
+        // Display submitted data
+        const submittedData = JSON.parse(localStorage.getItem('lastSubmittedFeedback') || '{}');
+        const detailsContainer = document.getElementById('thankyouDetails');
+        
+        if (Object.keys(submittedData).length > 0) {
+            detailsContainer.innerHTML = `
+                <h3>Your Submission Summary</h3>
+                <div class="detail-item"><strong>Name:</strong> ${submittedData.fullName || 'N/A'}</div>
+                <div class="detail-item"><strong>Email:</strong> ${submittedData.email || 'N/A'}</div>
+                <div class="detail-item"><strong>Phone:</strong> ${submittedData.phone || 'N/A'}</div>
+                <div class="detail-item"><strong>Country:</strong> ${submittedData.country || 'N/A'}</div>
+                <div class="detail-item"><strong>Gender:</strong> ${submittedData.gender || 'N/A'}</div>
+                <div class="detail-item"><strong>Rating:</strong> ${'★'.repeat(submittedData.rating || 0)}${'☆'.repeat(5 - (submittedData.rating || 0))}</div>
+                <div class="detail-item"><strong>Feedback:</strong> ${submittedData.feedback || 'N/A'}</div>
+            `;
+        }
+    </script>
+</body>
+</html>
+

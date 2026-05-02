@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Feedback Form with Events & Functions</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <span class="progress-text" id="progressText">0% Complete</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Form Card -->
+        <div class="glass-card">
+            <div class="form-header">
+                <h1>📝 Customer Feedback</h1>
+                <p>We value your opinion! Help us improve our services.</p>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast">
+                <span class="toast-icon">✓</span>
+                <span class="toast-message" id="toastMessage">Success!</span>
+            </div>
+
+            <form id="feedbackForm" autocomplete="off">
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">
+                        <span class="label-text">Full Name</span>
+                        <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="fullName" 
+                        name="fullName" 
+                        placeholder="Enter your full name"
+                        onkeypress="return validateNameKeyPress(event)"
+                        onfocus="highlightField(this)"
+                        onblur="validateName(); removeHighlight(this)"
+                        onmouseover="highlightField(this)"
+                        onmouseout="removeHighlight(this)"
+                    >
+                    <span class="error-message" id="nameError"></span>
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label for="email">
+                        <span class="label-text">Email Address</span>
+                        <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="your@email.com"
+                        onfocus="highlightField(this)"
+                        onblur="validateEmail(); removeHighlight(this)"
+                        onmouseover="highlightField(this)"
+                        onmouseout="removeHighlight(this)"
+                    >
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phone">
+                        <span class="label-text">Phone Number</span>
+                        <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="1234567890 (10 digits)"
+                        maxlength="10"
+                        onfocus="highlightField(this)"
+                        onblur="validatePhone(); removeHighlight(this)"
+                        onmouseover="highlightField(this)"
+                        onmouseout="removeHighlight(this)"
+                        onkeypress="return validatePhoneKeyPress(event)"
+                    >
+                    <span class="error-message" id="phoneError"></span>
+                </div>
+
+                <!-- Country -->
+                <div class="form-group">
+                    <label for="country">
+                        <span class="label-text">Country</span>
+                        <span class="required">*</span>
+                    </label>
+                    <select 
+                        id="country" 
+                        name="country"
+                        onfocus="highlightField(this)"
+                        onblur="validateCountry(); removeHighlight(this)"
+                        onmouseover="highlightField(this)"
+                        onmouseout="removeHighlight(this)"
+                        onchange="validateCountry(); updateProgress()"
+                    >
+                        <option value="">Select your country</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                        <option value="de">Germany</option>
+                        <option value="fr">France</option>
+                        <option value="in">India</option>
+                        <option value="jp">Japan</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <span class="error-message" id="countryError"></span>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label>
+                        <span class="label-text">Gender</span>
+                        <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-label" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='transparent'">
+                            <input type="radio" name="gender" value="male" onchange="validateGender(); updateProgress()">
+                            <span>Male</span>
+                        </label>
+                        <label class="radio-label" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='transparent'">
+                            <input type="radio" name="gender" value="female" onchange="validateGender(); updateProgress()">
+                            <span>Female</span>
+                        </label>
+                        <label class="radio-label" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='transparent'">
+                            <input type="radio" name="gender" value="other" onchange="validateGender(); updateProgress()">
+                            <span>Other</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="genderError"></span>
+                </div>
+
+                <!-- Rating -->
+                <div class="form-group">
+                    <label>
+                        <span class="label-text">Rating</span>
+                        <span class="required">*</span>
+                    </label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-value="1" onclick="setRating(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">★</span>
+                        <span class="star" data-value="2" onclick="setRating(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">★</span>
+                        <span class="star" data-value="3" onclick="setRating(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">★</span>
+                        <span class="star" data-value="4" onclick="setRating(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">★</span>
+                        <span class="star" data-value="5" onclick="setRating(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">★</span>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" value="0">
+                    <div class="rating-text" id="ratingText">Click a star to rate</div>
+                    <span class="error-message" id="ratingError"></span>
+                </div>
+
+                <!-- Feedback Message -->
+                <div class="form-group">
+                    <label for="feedback">
+                        <span class="label-text">Feedback Message</span>
+                        <span class="required">*</span>
+                    </label>
+                    <textarea 
+                        id="feedback" 
+                        name="feedback" 
+                        rows="5" 
+                        placeholder="Tell us about your experience (minimum 20 characters)..."
+                        onfocus="highlightField(this)"
+                        onblur="validateFeedback(); removeHighlight(this)"
+                        onmouseover="highlightField(this)"
+                        onmouseout="removeHighlight(this)"
+                        onkeyup="validateFeedback(); updateProgress()"
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="charCount">0</span> / 500 characters (min 20)
+                    </div>
+                    <span class="error-message" id="feedbackError"></span>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="form-group terms-group">
+                    <label class="checkbox-label" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='transparent'">
+                        <input type="checkbox" id="terms" name="terms" onchange="validateTerms(); updateProgress()">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">I agree to the <a href="#" onclick="event.preventDefault()">Terms & Conditions</a></span>
+                    </label>
+                    <span class="error-message" id="termsError"></span>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button 
+                        type="button" 
+                        class="btn btn-reset"
+                        onclick="resetForm()"
+                        onmouseover="this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.transform='translateY(0)'"
+                    >
+                        Reset
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-submit"
+                        id="submitBtn"
+                        ondblclick="submitForm()"
+                        onmouseover="this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.transform='translateY(0)'"
+                    >
+                        Submit Form
+                    </button>
+                </div>
+                <p class="dblclick-hint">👆 Double-click the submit button to confirm</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

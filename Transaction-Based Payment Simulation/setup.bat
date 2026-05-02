@@ -1,0 +1,9 @@
+@echo off
+echo Creating payment_db...
+mysql -u root -p < database.sql
+echo Copy to htdocs ^(for XAMPP^)...
+xcopy /E /I /Y . "C:\xampp\htdocs\task5_payment_simulation" 2>nul || echo No XAMPP, using PHP server
+echo Starting PHP server...
+php -S localhost:8000 2>nul || echo Add PHP to PATH or install XAMPP
+echo Open http://localhost:8000/index.php ^(PHP^) or http://localhost/task5_payment_simulation/index.php ^(XAMPP^)
+pause
